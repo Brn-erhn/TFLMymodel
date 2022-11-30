@@ -242,7 +242,7 @@ class MainActivity : AppCompatActivity() {
             byteBuffer.rewind()
 
 
-
+            // try to convert to byte buffer
 
 
             resize.copyPixelsToBuffer(byteBuffer)
