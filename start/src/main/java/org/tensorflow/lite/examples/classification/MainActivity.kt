@@ -149,6 +149,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     /**
      * Start the Camera which involves:
      *
