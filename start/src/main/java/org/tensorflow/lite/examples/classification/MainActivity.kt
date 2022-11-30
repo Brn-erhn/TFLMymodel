@@ -39,10 +39,15 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
+import org.tensorflow.lite.DataType
+import org.tensorflow.lite.examples.classification.ml.Model
 import org.tensorflow.lite.examples.classification.ui.RecognitionAdapter
 import org.tensorflow.lite.examples.classification.util.YuvToRgbConverter
 import org.tensorflow.lite.examples.classification.viewmodel.Recognition
 import org.tensorflow.lite.examples.classification.viewmodel.RecognitionListViewModel
+import org.tensorflow.lite.support.image.TensorImage
+import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
+import java.nio.ByteBuffer
 import java.util.concurrent.Executors
 import kotlin.random.Random
 
@@ -210,6 +215,10 @@ class MainActivity : AppCompatActivity() {
         // Initializing the flowerModel by lazy so that it runs in the same thread when the process
         // method is called.
 
+        val PhaModel = Model.newInstance(ctx)
+
+
+
         // TODO 6. Optional GPU acceleration
 
 
@@ -217,9 +226,38 @@ class MainActivity : AppCompatActivity() {
 
             val items = mutableListOf<Recognition>()
 
+
             // TODO 2: Convert Image to Bitmap then to TensorImage
 
+
+
+
+            val tfImage = toBitmap(imageProxy)
+            val resize = Bitmap.createScaledBitmap(tfImage!!, 224, 224, true)
+
+            val byteBuffer: ByteBuffer = ByteBuffer.allocate(224*224*3*4)
+            byteBuffer.rewind()
+
+
+
+
+            resize.copyPixelsToBuffer(byteBuffer)
+            val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
+            inputFeature0.loadBuffer(byteBuffer)
+
+
             // TODO 3: Process the image using the trained model, sort and pick out the top results
+
+            val outputs = PhaModel.process(inputFeature0)
+            val outputFeature0 = outputs.outputFeature0AsTensorBuffer
+            Log.d("output","${outputFeature0.floatArray}")
+            Log.d("output0","${outputFeature0.floatArray[0]}")
+
+
+            Log.d("output1","${outputFeature0.floatArray[1]}")
+
+
+
 
             // TODO 4: Converting the top probability items into a list of recognitions
 

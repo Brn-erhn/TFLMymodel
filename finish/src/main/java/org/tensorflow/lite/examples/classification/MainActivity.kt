@@ -210,6 +210,7 @@ class MainActivity : AppCompatActivity() {
         ImageAnalysis.Analyzer {
 
         // TODO 1: Add class variable TensorFlow Lite Model
+
         // Initializing the flowerModel by lazy so that it runs in the same thread when the process
         // method is called.
         private val flowerModel: FlowerModel by lazy{
