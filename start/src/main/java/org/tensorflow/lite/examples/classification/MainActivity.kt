@@ -245,6 +245,7 @@ class MainActivity : AppCompatActivity() {
             // try to convert to byte buffer
 
 
+
             resize.copyPixelsToBuffer(byteBuffer)
             val inputFeature0 = TensorBuffer.createFixedSize(intArrayOf(1, 224, 224, 3), DataType.FLOAT32)
             inputFeature0.loadBuffer(byteBuffer)
