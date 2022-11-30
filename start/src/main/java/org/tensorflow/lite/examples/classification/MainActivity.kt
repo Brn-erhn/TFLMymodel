@@ -51,6 +51,7 @@ import java.nio.ByteBuffer
 import java.util.concurrent.Executors
 import kotlin.random.Random
 
+
 // Constants
 private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
 private const val TAG = "TFL Classify" // Name for logging
