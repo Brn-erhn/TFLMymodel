@@ -45,7 +45,7 @@ import org.tensorflow.lite.examples.classification.ui.RecognitionAdapter
 import org.tensorflow.lite.examples.classification.util.YuvToRgbConverter
 import org.tensorflow.lite.examples.classification.viewmodel.Recognition
 import org.tensorflow.lite.examples.classification.viewmodel.RecognitionListViewModel
-import org.tensorflow.lite.support.image.TensorImage
+
 import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
 import java.nio.ByteBuffer
 import java.util.concurrent.Executors
@@ -238,6 +238,7 @@ class MainActivity : AppCompatActivity() {
 
             val byteBuffer: ByteBuffer = ByteBuffer.allocate(224*224*3*4)
             byteBuffer.rewind()
+
 
 
 
