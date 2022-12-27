@@ -17,11 +17,13 @@
 package org.tensorflow.lite.examples.classification.ui
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import org.tensorflow.lite.examples.classification.R
 import org.tensorflow.lite.examples.classification.databinding.RecognitionItemBinding
 import org.tensorflow.lite.examples.classification.viewmodel.Recognition
 
@@ -60,8 +62,22 @@ class RecognitionViewHolder(private val binding: RecognitionItemBinding) :
 
     // Binding all the fields to the view - to see which UI element is bind to which field, check
     // out layout/recognition_item.xml
+
+
     fun bindTo(recognition: Recognition) {
         binding.recognitionItem = recognition
+
+        if (recognition.label == "no") {
+            binding.recognitionName.setTextColor(Color.RED)
+
+        }
+        if (recognition.label == "yes") {
+            binding.recognitionName.setTextColor(Color.GREEN)
+
+        }
+
+
+
         binding.executePendingBindings()
     }
 }

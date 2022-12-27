@@ -39,7 +39,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import org.tensorflow.lite.DataType
 import org.tensorflow.lite.examples.classification.ml.Phamodel
 import org.tensorflow.lite.examples.classification.ui.RecognitionAdapter
 import org.tensorflow.lite.examples.classification.util.YuvToRgbConverter
@@ -47,18 +46,16 @@ import org.tensorflow.lite.examples.classification.viewmodel.Recognition
 import org.tensorflow.lite.examples.classification.viewmodel.RecognitionListViewModel
 import org.tensorflow.lite.support.image.TensorImage
 
-import org.tensorflow.lite.support.tensorbuffer.TensorBuffer
-import java.nio.ByteBuffer
-import java.util.concurrent.Executors
-import kotlin.random.Random
 
+import java.util.concurrent.Executors
 
 
 // Constants
-private const val MAX_RESULT_DISPLAY = 3 // Maximum number of results displayed
+private const val MAX_RESULT_DISPLAY = 2 // Maximum number of results displayed
 private const val TAG = "TFL Classify" // Name for logging
 private const val REQUEST_CODE_PERMISSIONS = 999 // Return code after asking for permission
 private val REQUIRED_PERMISSIONS = arrayOf(Manifest.permission.CAMERA) // permission needed
+
 
 // Listener for the result of the ImageAnalyzer
 typealias RecognitionListener = (recognition: List<Recognition>) -> Unit
@@ -241,7 +238,8 @@ class MainActivity : AppCompatActivity() {
             val outputs = model.process(tfImage)
                 .probabilityAsCategoryList.apply {
                     sortByDescending { it.score } // Sort with highest confidence first
-                }.take(MAX_RESULT_DISPLAY) // take the top results
+                }.take(MAX_RESULT_DISPLAY)
+
 
             // try to convert to byte buffer
 
@@ -256,11 +254,16 @@ class MainActivity : AppCompatActivity() {
 
 
             // TODO 4: Converting the top probability items into a list of recognitions
+            var confidency = "Confidency"
+            val probabilityString = String.format("%.1f%%", outputs[0]?.score?.times(100))
+            items.add(Recognition("Confidence Level:",probabilityString))
+            items.add(Recognition(outputs[0].label, " "))
+
 
             // START - Placeholder code at the start of the codelab. Comment this block of code out.
-            for (output in outputs) {
-                items.add(Recognition(output.label, output.score))
-            }
+           // for (output in outputs) {
+            //    items.add(Recognition(output.label, output.score))
+          //  }
             // END - Placeholder code at the start of the codelab. Comment this block of code out.
 
             // Return the result
